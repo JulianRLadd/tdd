@@ -1,9 +1,9 @@
 package com.tdd.salestax;
 
-import java.math.BigDecimal;
+import java.math.MathContext;
+import java.text.NumberFormat;
 
 public class ReceiptView {
-   // BigDecimal price = BigDecimal.valueOf(12.49);
 
     private ReceiptView() {
     }
@@ -17,6 +17,9 @@ public class ReceiptView {
         for (Item item : receipt.getItems()){
             formattedReceipt.append(String.format("\n\t%s", item.toString()));
         }
+        formattedReceipt.append(String.format("\n\t%s %s\t%s %s","Sales Taxes:",NumberFormat.getCurrencyInstance().format(receipt.getSalesTaxTotal()),
+                "Total:", NumberFormat.getCurrencyInstance().format(receipt.getTotal().round(new MathContext(4)))));
         return formattedReceipt.toString();
     }
+
 }

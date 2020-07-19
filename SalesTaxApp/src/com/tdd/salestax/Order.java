@@ -1,5 +1,6 @@
 package com.tdd.salestax;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -20,4 +21,5 @@ public class Order {
     public Iterable<? extends Item> getItems() {
         return items;
     }
+
 }
