@@ -48,27 +48,35 @@ Is it up to our interpretation?
 
 \*Use parameterized tests once we've progressed to test multiple items simultaneously
 
-\*As for how simple: "Make it work, make it beautiful, and then make it elegant" - J.L.
+\*As for how simple: "Make it work, make it efficient , and then make it elegant" - J.L.
 
 <h2>
     3. Executing the Plan
 </h2>
-*
-*
-*
-*
-*
-*
-*
-*
+
+\*Thank you Mr. Craig for the mobbing session. Really helped out!
+
+\*Started simple; worked up to more complicated tests
+
+\*Realized the initial tax calculation needed to be updated; first one wasn't stable
+
+\*Created a stratgy design pattern with interfaces but later discovered it was unnecessary
+
+\*String format is working very well!
+
+\* \* \*
+
 <h2>
     4. Reflection / Refactor
 </h2>
-*
-*
-*
-*
-*
-*
-*
-*
+*Refactor the prePring function for the receiptview class; the code could be cleaner
+
+\*Split up the responsibilty of finding the total and pre-total amounts in the receipt class
+
+\*Perhaps run the original tests in the exampleTest classes and run the actual requirements in the main?
+
+\*Create an acutal app out of it; take in input
+
+\*A user friendly version that makes it easier to determine what the tax status is of an item
+
+\* \* \*

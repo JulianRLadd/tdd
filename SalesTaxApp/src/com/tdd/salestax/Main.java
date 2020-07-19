@@ -21,7 +21,7 @@ public class Main {
         Order order = Order.getInstance();
         Item book = Item.getInstance("book", 1, BigDecimal.valueOf(12.49),"exempt");
         Item musicCD = Item.getInstance("music cd", 1, BigDecimal.valueOf(14.99));
-        Item chocolate = Item.getInstance("chocolate bar", 1, BigDecimal.valueOf(0.85));
+        Item chocolate = Item.getInstance("chocolate bar", 1, BigDecimal.valueOf(0.85),"exempt");
         order.addItem(book);
         order.addItem(musicCD);
         order.addItem(chocolate);
