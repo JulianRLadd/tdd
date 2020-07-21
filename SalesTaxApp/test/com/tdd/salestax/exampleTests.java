@@ -23,43 +23,66 @@ public class exampleTests {
     }
 
     @Test
-    public void testSalesTax_multipleItems() {
+    public void testSalesTax_singleExemptItem() {
         String expectedBook = getItemFormat(BigDecimal.valueOf(12.49), "book", 1);
-        String expectedMusicCD = getItemFormat(BigDecimal.valueOf(16.49), "music cd", 1);
-        String expectedChocolate = getItemFormat(BigDecimal.valueOf(0.85), "chocolate bar", 1);
-        String expectedReadOut = getReadOutFormat(BigDecimal.valueOf(1.50),BigDecimal.valueOf(29.83));
+        String expectedReadOut = getReadOutFormat(BigDecimal.valueOf(0.00),BigDecimal.valueOf(12.49));
         Order order = Order.getInstance();
         Item book = Item.getInstance("book", 1, BigDecimal.valueOf(12.49),"exempt");
-        Item musicCD = Item.getInstance("music cd", 1, BigDecimal.valueOf(14.99));
+        order.addItem(book);
+        Receipt receipt = Receipt.getInstance(order);
+        String expected = String.format("%s%s", expectedBook,expectedReadOut);
+        String actual = ReceiptView.getInstance().prePrint(receipt);
+        Assert.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void testSalesTax_multipleExemptItem() {
+        String expectedBook = getItemFormat(BigDecimal.valueOf(12.49), "book", 1);
+        String expectedChocolate = getItemFormat(BigDecimal.valueOf(0.85), "chocolate bar", 1);
+        String expectedReadOut = getReadOutFormat(BigDecimal.valueOf(0.00),BigDecimal.valueOf(13.34));
+        Order order = Order.getInstance();
+        Item book = Item.getInstance("book", 1, BigDecimal.valueOf(12.49),"exempt");
         Item chocolate = Item.getInstance("chocolate bar", 1, BigDecimal.valueOf(0.85),"exempt");
         order.addItem(book);
-        order.addItem(musicCD);
         order.addItem(chocolate);
         Receipt receipt = Receipt.getInstance(order);
-        String expected = String.format("%s%s%s%s", expectedBook, expectedMusicCD,expectedChocolate,expectedReadOut);
+        String expected = String.format("%s%s%s", expectedBook, expectedChocolate,expectedReadOut);
         String actual = ReceiptView.getInstance().prePrint(receipt);
         Assert.assertEquals(expected, actual);
     }
 
 
     @Test
-    public void testMultipleItemsReadOut() {
+    public void testSingleItemImported() {
         String expectedChocolate = getItemFormat(BigDecimal.valueOf(10.50), "imported chocolate", 1);
-        String expectedPerfume = getItemFormat(BigDecimal.valueOf(54.65), "imported perfume", 1);
-        String expectedReadOut = getReadOutFormat(BigDecimal.valueOf(7.65),BigDecimal.valueOf(65.15));
+        String expectedReadOut = getReadOutFormat(BigDecimal.valueOf(0.50),BigDecimal.valueOf(10.50));
         Order order = Order.getInstance();
         Item chocolate = Item.getInstance("chocolate", 1, BigDecimal.valueOf(10.00),"both");
-        Item perfume = Item.getInstance("perfume", 1, BigDecimal.valueOf(47.50),"imported");
         order.addItem(chocolate);
-        order.addItem(perfume);
         Receipt receipt = Receipt.getInstance(order);
-        String expected = String.format("%s%s%s", expectedChocolate, expectedPerfume, expectedReadOut);
+        String expected = String.format("%s%s", expectedChocolate, expectedReadOut);
         String actual = ReceiptView.getInstance().prePrint(receipt);
         Assert.assertEquals(expected, actual);
     }
 
     @Test
-    public void testFinalOne() {
+    public void testMultipleItemImported() {
+        String expectedChocolate = getItemFormat(BigDecimal.valueOf(10.50), "imported chocolate", 1);
+        String expectedCologne = getItemFormat(BigDecimal.valueOf(23.00), "imported cologne", 1);
+        String expectedReadOut = getReadOutFormat(BigDecimal.valueOf(3.50),BigDecimal.valueOf(33.50));
+        Order order = Order.getInstance();
+        Item chocolate = Item.getInstance("chocolate", 1, BigDecimal.valueOf(10.00),"both");
+        Item cologne = Item.getInstance("cologne", 1, BigDecimal.valueOf(20.00),"imported");
+        order.addItem(chocolate);
+        order.addItem(cologne);
+        Receipt receipt = Receipt.getInstance(order);
+        String expected = String.format("%s%s%s", expectedChocolate, expectedCologne, expectedReadOut);
+        String actual = ReceiptView.getInstance().prePrint(receipt);
+        Assert.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void testMixedItems() {
         String expectedImportedPerfume = getItemFormat(BigDecimal.valueOf(32.19), "imported bottle of perfume", 1);
         String expectedPerfume = getItemFormat(BigDecimal.valueOf(20.89), "bottle of perfume", 1);
         String expectedPills = getItemFormat(BigDecimal.valueOf(9.75), "packet of headache pills", 1);
